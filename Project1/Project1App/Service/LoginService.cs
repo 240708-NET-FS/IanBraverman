@@ -1,5 +1,7 @@
 using Project1App.DAO;
 using Project1App.Entities;
+using Project1App.Utility.Exceptions;
+using Project1App.Utility;
 
 namespace Project1App.Service;
 
@@ -23,10 +25,10 @@ public class LoginService : IService<Login>
 
         if (login != null)
         {
-            State.currentlogin = login;
+            State.currentLogin = login;
             return login;
         }
-        throw new LoginException("Invalid Login, Please Try Again")
+        throw new LoginException("Invalid Login, Please Try Again");
     }
     public void Create(Login item)
     {

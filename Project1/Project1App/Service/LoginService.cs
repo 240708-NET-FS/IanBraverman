@@ -30,6 +30,23 @@ public class LoginService : IService<Login>
         }
         throw new LoginException("Invalid Login, Please Try Again");
     }
+
+    public void Register(string username, string password)
+    {
+        if (username.Length == 0 || password.Length == 0)
+        {
+            throw new LoginException("Invalid Register Input");
+        }
+
+
+
+        var login = new Login { UserName = username, Password = password };
+
+        _loginDAO.Register(login);
+
+
+    }
+
     public void Create(Login item)
     {
         throw new NotImplementedException();

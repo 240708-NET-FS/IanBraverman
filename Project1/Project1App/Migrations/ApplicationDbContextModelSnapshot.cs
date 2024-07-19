@@ -24,6 +24,7 @@ namespace Project1.Migrations
             modelBuilder.Entity("Project1App.Entities.Login", b =>
                 {
                     b.Property<int>("LoginID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Password")

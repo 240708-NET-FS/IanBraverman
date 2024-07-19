@@ -19,6 +19,12 @@ public class LoginDAO : IDAO<Login>
         _context.SaveChanges();
     }
 
+    public void Register(Login item)
+    {
+        _context.Logins.Add(item);
+        _context.SaveChanges();
+    }
+
     public void Delete(Login item)
     {
         _context.Logins.Remove(item);

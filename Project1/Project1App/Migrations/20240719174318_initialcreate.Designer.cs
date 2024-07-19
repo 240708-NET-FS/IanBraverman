@@ -11,8 +11,8 @@ using Project1App.Entities;
 namespace Project1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240717200328_SecondCreate")]
-    partial class SecondCreate
+    [Migration("20240719174318_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,7 @@ namespace Project1.Migrations
             modelBuilder.Entity("Project1App.Entities.Login", b =>
                 {
                     b.Property<int>("LoginID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Password")

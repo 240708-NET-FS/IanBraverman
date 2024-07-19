@@ -18,7 +18,7 @@ public class LoginController
 
     public void Login()
     {
-        Console.WriteLine("Please Log In Below");
+        Console.WriteLine("Please log in below");
         Console.WriteLine("Please enter your username below: ");
 
         string username = Console.ReadLine();
@@ -48,6 +48,27 @@ public class LoginController
                 default:
                     break;
             }
+
+        }
+        catch (LoginException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+    public void Register()
+    {
+        Console.WriteLine("Please Register Below");
+        Console.WriteLine("Please enter your new username below: ");
+
+        string username = Console.ReadLine();
+
+        Console.WriteLine("Please enter your new password below: ");
+
+        string password = Console.ReadLine();
+
+        try
+        {
+            loginService.Register(username, password);
 
         }
         catch (LoginException e)

@@ -14,26 +14,76 @@ public class PlayerDAO : IDAO<Player>
 
     public void Create(Player item)
     {
-        throw new NotImplementedException();
+        _context.Players.Add(item);
+        _context.SaveChanges();
     }
 
     public void Delete(Player item)
     {
-        throw new NotImplementedException();
+        _context.Players.Remove(item);
+        _context.SaveChanges();
     }
 
     public ICollection<Player> GetAll()
     {
-        throw new NotImplementedException();
+        List<Player> players = _context.Players.ToList();
+
+        return players;
     }
 
     public Player GetByID(int ID)
     {
-        throw new NotImplementedException();
+        Player player = _context.Players.FirstOrDefault(p => p.PlayerID == ID);
+
+        return player;
+
     }
 
     public void Update(Player newItem)
     {
-        throw new NotImplementedException();
+        Player originalPlayer = _context.Players.FirstOrDefault(p => p.PlayerID == newItem.PlayerID);
+
+        if (originalPlayer != null)
+        {
+            originalPlayer.FirstName = newItem.FirstName;
+            originalPlayer.LastName = newItem.LastName;
+            originalPlayer.CurrentRoom = newItem.CurrentRoom;
+            originalPlayer.Health = newItem.Health;
+
+        }
+    }
+
+    public void UpdateField(int PlayerID, Dictionary<string, object> updates)
+    //will take the playerID, and search for it in the database, then assign originalPlayer to that, then only make updates
+    // to ones that had changes made
+    {
+        Player originalPlayer = _context.Players.FirstOrDefault(p => p.PlayerID == PlayerID);
+
+        if (originalPlayer != null)
+        {
+            foreach (var update in updates)
+            {
+                var property = originalPlayer.GetType().GetProperty(update.Key);
+                if (property != null & property.CanWrite)
+                {
+                    property.SetValue(originalPlayer, update.Value);
+                }
+
+            }
+        }
+        _context.SaveChanges();
+
+        /* example of how to make a change
+
+        var dao = new PlayerDAO(context);
+
+        updates = new Dictionary<string, object>
+        {
+            { "FirstName", newFirstNameValue },
+            { "Health", newHealthValue }
+        }       ;
+
+        dao.Update(playerItemsID, updates);
+    */
     }
 }

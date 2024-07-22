@@ -33,7 +33,7 @@ public class PlayerDAO : IDAO<Player>
 
     public Player GetByID(int ID)
     {
-        Player player = _context.Players.FirstOrDefault(p => p.PlayerID == ID);
+        Player player = _context.Players.FirstOrDefault(p => p.PlayerId == ID);
 
         return player;
 
@@ -41,7 +41,7 @@ public class PlayerDAO : IDAO<Player>
 
     public void Update(Player newItem)
     {
-        Player originalPlayer = _context.Players.FirstOrDefault(p => p.PlayerID == newItem.PlayerID);
+        Player originalPlayer = _context.Players.FirstOrDefault(p => p.PlayerId == newItem.PlayerId);
 
         if (originalPlayer != null)
         {
@@ -57,7 +57,7 @@ public class PlayerDAO : IDAO<Player>
     //will take the playerID, and search for it in the database, then assign originalPlayer to that, then only make updates
     // to ones that had changes made
     {
-        Player originalPlayer = _context.Players.FirstOrDefault(p => p.PlayerID == PlayerID);
+        Player originalPlayer = _context.Players.FirstOrDefault(p => p.PlayerId == PlayerID);
 
         if (originalPlayer != null)
         {

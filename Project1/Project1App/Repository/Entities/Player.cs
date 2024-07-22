@@ -1,8 +1,15 @@
 namespace Project1App.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Player
 {
-    public int PlayerID { get; set; }
+    // [Key]
+    // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int PlayerId { get; set; }
 
     public string FirstName { get; set; }
 
@@ -12,12 +19,13 @@ public class Player
 
     public int Health { get; set; }
 
+    public int LoginId { get; set; }
     public Login Login { get; set; }
 
     public PlayerItems PlayerItems { get; set; }
 
     public override string ToString()
     {
-        return $"{PlayerID} {FirstName} {LastName} {CurrentRoom} {Health} {Login} {PlayerItems}";
+        return $"{PlayerId} {FirstName} {LastName} {CurrentRoom} {Health} {Login} {PlayerItems}";
     }
 }

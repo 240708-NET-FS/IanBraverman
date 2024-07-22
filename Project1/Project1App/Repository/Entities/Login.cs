@@ -8,8 +8,9 @@ namespace Project1App.Entities;
 public class Login
 {
 
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int LoginID { get; set; }
+    // [Key]
+    // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int LoginId { get; set; }
 
 
     public string UserName { get; set; }
@@ -22,6 +23,6 @@ public class Login
 
     public override string ToString()
     {
-        return $"{LoginID} {UserName} {Password}";
+        return $"{LoginId} {UserName} {Password}";
     }
 }

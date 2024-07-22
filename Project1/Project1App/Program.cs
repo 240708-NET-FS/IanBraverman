@@ -41,28 +41,28 @@ public class Program
 
         // }
         var context = new ApplicationDbContext();
-        var player = new Player
-        {
+        // var player = new Player
+        // {
 
-            FirstName = "Ian",
-            LastName = "Braverman"
+        //     FirstName = "Ian",
+        //     LastName = "Braverman"
 
-        };
+        // };
         var login = new Login
         {
 
             UserName = "testuser",
             Password = "password123",
-            PlayerID = player.PlayerID,
+
 
         };
-        context.Players.Add(player);
-        context.SaveChanges();
+        // context.Players.Add(player);
+        // context.SaveChanges();
 
 
         context.Logins.Add(login);
         context.SaveChanges();
 
-        Console.WriteLine($"New LoginID: {login.LoginID}");
+        Console.WriteLine($"New LoginID: {login.LoginId}");
     }
 }

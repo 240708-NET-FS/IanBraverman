@@ -1,8 +1,16 @@
 namespace Project1App.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
+
+using System.ComponentModel.DataAnnotations;
+using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
+
 
 public class PlayerItems
 {
-    public int PlayerItemsID { get; set; }
+    // [Key]
+    // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int PlayerItemsId { get; set; }
 
     public int Sword { get; set; }
 
@@ -14,10 +22,12 @@ public class PlayerItems
 
     public int DungeonKey { get; set; }
 
+    public int PlayerIdd { get; set; }
+
     public Player Player { get; set; }
 
     public override string ToString()
     {
-        return $"{PlayerItemsID} {Sword} {Shield} {Armor} {Helmet} {DungeonKey} {Player}";
+        return $"{PlayerItemsId} {Sword} {Shield} {Armor} {Helmet} {DungeonKey} {Player}";
     }
 }

@@ -11,37 +11,38 @@ namespace Project1.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Players",
-                columns: table => new
-                {
-                    PlayerID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CurrentRoom = table.Column<int>(type: "int", nullable: false),
-                    Health = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Players", x => x.PlayerID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Logins",
                 columns: table => new
                 {
-                    LoginID = table.Column<int>(type: "int", nullable: false),
+                    LoginId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Logins", x => x.LoginID);
+                    table.PrimaryKey("PK_Logins", x => x.LoginId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Players",
+                columns: table => new
+                {
+                    PlayerId = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrentRoom = table.Column<int>(type: "int", nullable: false),
+                    Health = table.Column<int>(type: "int", nullable: false),
+                    LoginId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Players", x => x.PlayerId);
                     table.ForeignKey(
-                        name: "FK_Logins_Players_LoginID",
-                        column: x => x.LoginID,
-                        principalTable: "Players",
-                        principalColumn: "PlayerID",
+                        name: "FK_Players_Logins_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Logins",
+                        principalColumn: "LoginId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -49,21 +50,22 @@ namespace Project1.Migrations
                 name: "PlayerItems",
                 columns: table => new
                 {
-                    PlayerItemsID = table.Column<int>(type: "int", nullable: false),
+                    PlayerItemsId = table.Column<int>(type: "int", nullable: false),
                     Sword = table.Column<int>(type: "int", nullable: false),
                     Shield = table.Column<int>(type: "int", nullable: false),
                     Armor = table.Column<int>(type: "int", nullable: false),
                     Helmet = table.Column<int>(type: "int", nullable: false),
-                    DungeonKey = table.Column<int>(type: "int", nullable: false)
+                    DungeonKey = table.Column<int>(type: "int", nullable: false),
+                    PlayerIdd = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerItems", x => x.PlayerItemsID);
+                    table.PrimaryKey("PK_PlayerItems", x => x.PlayerItemsId);
                     table.ForeignKey(
-                        name: "FK_PlayerItems_Players_PlayerItemsID",
-                        column: x => x.PlayerItemsID,
+                        name: "FK_PlayerItems_Players_PlayerItemsId",
+                        column: x => x.PlayerItemsId,
                         principalTable: "Players",
-                        principalColumn: "PlayerID",
+                        principalColumn: "PlayerId",
                         onDelete: ReferentialAction.Cascade);
                 });
         }
@@ -72,13 +74,13 @@ namespace Project1.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Logins");
-
-            migrationBuilder.DropTable(
                 name: "PlayerItems");
 
             migrationBuilder.DropTable(
                 name: "Players");
+
+            migrationBuilder.DropTable(
+                name: "Logins");
         }
     }
 }

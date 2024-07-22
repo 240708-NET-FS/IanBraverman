@@ -23,9 +23,11 @@ namespace Project1.Migrations
 
             modelBuilder.Entity("Project1App.Entities.Login", b =>
                 {
-                    b.Property<int>("LoginID")
+                    b.Property<int>("LoginId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoginId"));
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -35,18 +37,15 @@ namespace Project1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LoginID");
+                    b.HasKey("LoginId");
 
                     b.ToTable("Logins");
                 });
 
             modelBuilder.Entity("Project1App.Entities.Player", b =>
                 {
-                    b.Property<int>("PlayerID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("PlayerId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlayerID"));
 
                     b.Property<int>("CurrentRoom")
                         .HasColumnType("int");
@@ -62,14 +61,17 @@ namespace Project1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PlayerID");
+                    b.Property<int>("LoginId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlayerId");
 
                     b.ToTable("Players");
                 });
 
             modelBuilder.Entity("Project1App.Entities.PlayerItems", b =>
                 {
-                    b.Property<int>("PlayerItemsID")
+                    b.Property<int>("PlayerItemsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Armor")
@@ -81,44 +83,50 @@ namespace Project1.Migrations
                     b.Property<int>("Helmet")
                         .HasColumnType("int");
 
+                    b.Property<int>("PlayerIdd")
+                        .HasColumnType("int");
+
                     b.Property<int>("Shield")
                         .HasColumnType("int");
 
                     b.Property<int>("Sword")
                         .HasColumnType("int");
 
-                    b.HasKey("PlayerItemsID");
+                    b.HasKey("PlayerItemsId");
 
                     b.ToTable("PlayerItems");
                 });
 
-            modelBuilder.Entity("Project1App.Entities.Login", b =>
+            modelBuilder.Entity("Project1App.Entities.Player", b =>
                 {
-                    b.HasOne("Project1App.Entities.Player", "Player")
-                        .WithOne("Login")
-                        .HasForeignKey("Project1App.Entities.Login", "LoginID")
+                    b.HasOne("Project1App.Entities.Login", "Login")
+                        .WithOne("Player")
+                        .HasForeignKey("Project1App.Entities.Player", "PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Player");
+                    b.Navigation("Login");
                 });
 
             modelBuilder.Entity("Project1App.Entities.PlayerItems", b =>
                 {
                     b.HasOne("Project1App.Entities.Player", "Player")
                         .WithOne("PlayerItems")
-                        .HasForeignKey("Project1App.Entities.PlayerItems", "PlayerItemsID")
+                        .HasForeignKey("Project1App.Entities.PlayerItems", "PlayerItemsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("Project1App.Entities.Login", b =>
+                {
+                    b.Navigation("Player")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Project1App.Entities.Player", b =>
                 {
-                    b.Navigation("Login")
-                        .IsRequired();
-
                     b.Navigation("PlayerItems")
                         .IsRequired();
                 });

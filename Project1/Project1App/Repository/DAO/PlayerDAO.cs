@@ -39,6 +39,12 @@ public class PlayerDAO : IDAO<Player>
 
     }
 
+    public Player GetByLoginID(int ID)
+    {
+        Player player = _context.Players.FirstOrDefault(p => p.LoginId == ID);
+        return player;
+    }
+
     public void Update(Player newItem)
     {
         Player originalPlayer = _context.Players.FirstOrDefault(p => p.PlayerId == newItem.PlayerId);
@@ -53,7 +59,7 @@ public class PlayerDAO : IDAO<Player>
         }
     }
 
-    public void UpdateField(int PlayerID, Dictionary<string, object> updates)
+    public void UpdateFields(int PlayerID, Dictionary<string, object> updates)
     //will take the playerID, and search for it in the database, then assign originalPlayer to that, then only make updates
     // to ones that had changes made
     {

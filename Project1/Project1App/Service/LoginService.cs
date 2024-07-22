@@ -15,6 +15,8 @@ public class LoginService : IService<Login>
         _loginDAO = loginDAO;
     }
 
+
+
     public Login Login(string username, string password)
     {
         if (username.Length == 0 || password.Length == 0)
@@ -26,6 +28,7 @@ public class LoginService : IService<Login>
         if (login != null)
         {
             State.currentLogin = login;
+
             return login;
         }
         throw new LoginException("Invalid Login, Please Try Again");
@@ -40,11 +43,24 @@ public class LoginService : IService<Login>
 
 
 
-        var login = new Login { UserName = username, Password = password };
+        Login login = new Login { UserName = username, Password = password };
+
+
+        // //this checks to see if username already exists in the system
+        Login loginById = _loginDAO.GetLoginByUsernameAndPassword(username, password);
+
+        //need to have the ? because if loginbyID comes back null, then gives an error because cant do
+        //.username on a null
+        if (loginById?.UserName == username)
+        {
+            throw new LoginException("Username Already Exists. Please log in or use a different username");
+        }
 
         _loginDAO.Register(login);
 
+        loginById = _loginDAO.GetLoginByUsernameAndPassword(username, password);
 
+        State.currentLogin = login;
     }
 
     public void Create(Login item)

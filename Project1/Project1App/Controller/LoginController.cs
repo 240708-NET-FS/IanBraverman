@@ -11,10 +11,15 @@ public class LoginController
 
     private LoginService loginService;
 
-    public LoginController(LoginService service)
+    private PlayerService playerService;
+
+    public LoginController(LoginService service, PlayerService playerservice)
     {
         loginService = service;
+        playerService = playerservice;
     }
+
+
 
     public void Login()
     {
@@ -30,7 +35,10 @@ public class LoginController
         try
         {
             Login login = loginService.Login(username, password);
-            Console.WriteLine(login);
+            State.currentPlayer = playerService.GetByLoginID();
+            Console.WriteLine("the current login is " + State.currentLogin.LoginId);
+
+            Console.WriteLine("The current player is: " + State.currentPlayer);
 
             Console.WriteLine("Do you want to quit? Please type Y or N");
 
@@ -46,6 +54,7 @@ public class LoginController
                 case "n":
                     break;
                 default:
+                    Console.WriteLine("Invalid Input");
                     break;
             }
 
@@ -69,7 +78,6 @@ public class LoginController
         try
         {
             loginService.Register(username, password);
-
         }
         catch (LoginException e)
         {

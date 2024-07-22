@@ -1,9 +1,5 @@
 namespace Project1App.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
 
-using System.ComponentModel.DataAnnotations;
-using Microsoft.Identity.Client;
-using System.ComponentModel.DataAnnotations;
 
 
 public class PlayerItems
@@ -22,7 +18,7 @@ public class PlayerItems
 
     public int DungeonKey { get; set; }
 
-    public int PlayerIdd { get; set; }
+    public int PlayerId { get; set; }
 
     public Player Player { get; set; }
 

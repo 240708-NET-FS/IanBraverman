@@ -12,57 +12,64 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        // using (var context = new ApplicationDbContext())
-        // {
-        //     PlayerDAO playerDAO = new PlayerDAO(context);
-        //     LoginDAO loginDAO = new LoginDAO(context);
+        using (var context = new ApplicationDbContext())
+        {
+            PlayerDAO playerDAO = new PlayerDAO(context);
+            LoginDAO loginDAO = new LoginDAO(context);
 
-        //     PlayerService playerService = new PlayerService(playerDAO);
-        //     LoginService loginService = new LoginService(loginDAO);
+            PlayerService playerService = new PlayerService(playerDAO);
+            LoginService loginService = new LoginService(loginDAO);
 
-        //     PlayerController playerController = new PlayerController(playerService);
-        //     LoginController loginController = new LoginController(loginService);
+            PlayerController playerController = new PlayerController(playerService);
+            LoginController loginController = new LoginController(loginService, playerService);
 
-        //     State.isActive = true;
+            State.isActive = true;
 
-        //     while (State.isActive)
-        //     {
-        //         bool loginOrRegister = LoginOrRegisterController.LoginOrRegister();
-        //         if (loginOrRegister == true)
-        //         {
-        //             loginController.Login();
-        //         }
-        //         else if (loginOrRegister == false)
-        //         {
-        //             loginController.Register();
-        //             loginController.Login();
-        //         }
-        //     }
+            while (State.isActive)
+            {
+                bool loginOrRegister = LoginOrRegisterController.LoginOrRegister();
+                if (loginOrRegister == true)
+                {
+                    loginController.Login();
 
-        // }
-        var context = new ApplicationDbContext();
+                    context.SaveChanges();
+                }
+                else if (loginOrRegister == false)
+                {
+                    loginController.Register();
+                    playerController.NewPlayer();
+                    context.SaveChanges();
+                }
+            }
+
+        }
+        //this is testing the new player creation
+
+        // var context = new ApplicationDbContext();
         // var player = new Player
         // {
 
         //     FirstName = "Ian",
-        //     LastName = "Braverman"
+        //     LastName = "Braverman",
+        //     PlayerId = 2,
+        //     LoginId = 1,
 
         // };
-        var login = new Login
-        {
+        // // var login = new Login
+        // // {
 
-            UserName = "testuser",
-            Password = "password123",
+        // //     UserName = "testuser",
+        // //     Password = "password123",
 
 
-        };
+        // // };
         // context.Players.Add(player);
         // context.SaveChanges();
 
 
-        context.Logins.Add(login);
-        context.SaveChanges();
+        // context.Logins.Add(login);
+        // context.SaveChanges();
 
-        Console.WriteLine($"New LoginID: {login.LoginId}");
+        // Console.WriteLine($"New LoginID: {login.LoginId}");
     }
 }

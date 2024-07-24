@@ -83,7 +83,7 @@ namespace Project1.Migrations
                     b.Property<int>("Helmet")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlayerIdd")
+                    b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
                     b.Property<int>("Shield")

@@ -14,34 +14,41 @@ public class PlayerController
         playerService = service;
     }
 
-    public void NewGameOrRegister()
+    public bool NewGameOrRegister()
     {
         Console.WriteLine("Would you like to continue your current game or start a new one?");
         Console.WriteLine("Please enter N for new game, or C to continue your prior game: ");
 
         string input = Console.ReadLine();
 
-        switch (input)
+        while (true)
         {
-            case "N":
-            case "n":
-            case "New":
-            case "new":
-                //then the current room becomes 0 for player. 0 means no game.
-                var updates = new Dictionary<string, object>
+            switch (input)
+            {
+                case "N":
+                case "n":
+                case "New":
+                case "new":
+                    //then the current room becomes 0 for player. 0 means no game.
+                    var updates = new Dictionary<string, object>
                     {
-                        {"CurrentRoom", 0}
+                        {"CurrentRoom", 0},
+                        {"Health", 5},
                     };
-                playerService.UpdateFields(updates);
-                break;
-            case "C":
-            case "c":
-            case "Continue":
-            case "continue":
-                //continue game
-                break;
-        }
+                    playerService.UpdateFields(updates);
+                    return true;
+                case "C":
+                case "c":
+                case "Continue":
+                case "continue":
+                    //continue current game
+                    return false;
+                default:
+                    Console.WriteLine("Please enter a valid answer");
+                    break;
+            }
 
+        }
     }
 
     public void NewPlayer()

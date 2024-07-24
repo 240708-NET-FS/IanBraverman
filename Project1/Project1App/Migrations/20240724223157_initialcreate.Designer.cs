@@ -11,7 +11,7 @@ using Project1App.Entities;
 namespace Project1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240722154718_initialcreate")]
+    [Migration("20240724223157_initialcreate")]
     partial class initialcreate
     {
         /// <inheritdoc />
@@ -86,7 +86,7 @@ namespace Project1.Migrations
                     b.Property<int>("Helmet")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlayerIdd")
+                    b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
                     b.Property<int>("Shield")

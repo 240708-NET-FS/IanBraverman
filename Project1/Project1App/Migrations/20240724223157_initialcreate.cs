@@ -56,7 +56,7 @@ namespace Project1.Migrations
                     Armor = table.Column<int>(type: "int", nullable: false),
                     Helmet = table.Column<int>(type: "int", nullable: false),
                     DungeonKey = table.Column<int>(type: "int", nullable: false),
-                    PlayerIdd = table.Column<int>(type: "int", nullable: false)
+                    PlayerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -22,6 +22,7 @@ public class Program
 
             PlayerController playerController = new PlayerController(playerService);
             LoginController loginController = new LoginController(loginService, playerService);
+            LoginOrRegisterController loginOrRegisterController = new LoginOrRegisterController();
 
             State.isActive = true;
 
@@ -39,6 +40,15 @@ public class Program
                     loginController.Register();
                     playerController.NewPlayer();
                     context.SaveChanges();
+                }
+                bool continueOrNew = playerController.NewGameOrRegister();
+                if (continueOrNew == true)
+                {
+                    Console.WriteLine("Starting a new game...");
+                }
+                else if (continueOrNew == false)
+                {
+                    Console.WriteLine("Continuing prior game...");
                 }
             }
 

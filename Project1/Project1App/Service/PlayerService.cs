@@ -51,6 +51,8 @@ public class PlayerService : IService<Player>
     public void UpdateFields(Dictionary<string, object> updates)
     {
         _playerDAO.UpdateFields(State.currentPlayer.PlayerId, updates);
+        var loggedInPlayer = _playerDAO.GetByLoginID(Utility.State.currentLogin.LoginId);
+        State.currentPlayer = loggedInPlayer;
     }
 
     public void RegisterNewPlayer(string FirstName, string LastName, int LoginId, Login LoginObj)
@@ -64,7 +66,10 @@ public class PlayerService : IService<Player>
 
         _playerDAO.Create(player);
 
+        State.currentPlayer = player;
+
     }
+
 
 
 }

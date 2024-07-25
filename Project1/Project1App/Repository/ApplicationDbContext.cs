@@ -46,7 +46,7 @@ public class ApplicationDbContext : DbContext
         // modelBuilder.Entity<PlayerItems>()
         //     .Property(pi => pi.PlayerItemsID)
         //     .ValueGeneratedOnAdd();
-        modelBuilder.Entity<Player>().HasOne(p => p.PlayerItems).WithOne(pi => pi.Player).HasForeignKey<PlayerItems>(pi => pi.PlayerItemsId);
+        modelBuilder.Entity<Player>().HasOne(p => p.PlayerItems).WithOne(pi => pi.Player).HasForeignKey<PlayerItems>(pi => pi.PlayerId);
         // modelBuilder.Entity<Player>().HasOne(p => p.Login).WithOne(l => l.Player).HasForeignKey<Login>(l => l.LoginId);
         modelBuilder.Entity<Login>().HasOne(l => l.Player).WithOne(p => p.Login).HasForeignKey<Player>(p => p.PlayerId);
 

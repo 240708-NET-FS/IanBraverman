@@ -9,4 +9,6 @@ public static class State
     public static Login currentLogin { get; set; }
 
     public static Player currentPlayer { get; set; }
+
+    public static PlayerItems playerItems { get; set; }
 }

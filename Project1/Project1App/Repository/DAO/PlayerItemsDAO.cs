@@ -34,7 +34,7 @@ public class PlayerItemsDAO : IDAO<PlayerItems>
 
     public PlayerItems GetByID(int ID)
     {
-        PlayerItems playerItems = _context.PlayerItems.Include(p => p.Player).FirstOrDefault(pi => pi.PlayerItemsId == ID);
+        PlayerItems playerItems = _context.PlayerItems.Include(p => p.Player).FirstOrDefault(pi => pi.PlayerId == ID);
         return playerItems;
     }
 
@@ -44,10 +44,10 @@ public class PlayerItemsDAO : IDAO<PlayerItems>
         _context.SaveChanges();
     }
 
-    public void UpdateField(int PlayerItemsID, Dictionary<string, object> updates)
+    public void UpdateFields(int PlayerID, Dictionary<string, object> updates)
     //so this update takes the playerItemsID to search for in database and assign, then a dictionary that includes string and an object as key value pair of updates
     {
-        PlayerItems originalPlayerItems = _context.PlayerItems.FirstOrDefault(pi => pi.PlayerItemsId == PlayerItemsID);
+        PlayerItems originalPlayerItems = _context.PlayerItems.FirstOrDefault(pi => pi.PlayerId == PlayerID);
 
         if (originalPlayerItems != null)
         //if originalPlayerItems didnt come back empty
@@ -77,7 +77,7 @@ updates = new Dictionary<string, object>
     { "Helmet", newHelmetValue }
 };
 
-dao.Update(playerItemsID, updates);
+dao.Update(playerID, updates);
     */
 }
 

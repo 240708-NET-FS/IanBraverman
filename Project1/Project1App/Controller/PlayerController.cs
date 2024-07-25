@@ -9,12 +9,15 @@ public class PlayerController
 {
     private PlayerService playerService;
 
-    public PlayerController(PlayerService service)
+    private PlayerItemsService playerItemsService;
+
+    public PlayerController(PlayerService service, PlayerItemsService playeritemservice)
     {
         playerService = service;
+        playerItemsService = playeritemservice;
     }
 
-    public bool NewGameOrRegister()
+    public bool NewGameOrContinue()
     {
         Console.WriteLine("Would you like to continue your current game or start a new one?");
         Console.WriteLine("Please enter N for new game, or C to continue your prior game: ");
@@ -30,12 +33,21 @@ public class PlayerController
                 case "New":
                 case "new":
                     //then the current room becomes 0 for player. 0 means no game.
-                    var updates = new Dictionary<string, object>
+                    var updatesPlayer = new Dictionary<string, object>
                     {
                         {"CurrentRoom", 0},
                         {"Health", 5},
                     };
-                    playerService.UpdateFields(updates);
+                    playerService.UpdateFields(updatesPlayer);
+                    var resetsPlayerItems = new Dictionary<string, object>
+                    {
+                        {"Sword", 0 },
+                        {"Shield", 0 },
+                        {"Armor", 0 },
+                        {"Helmet", 0 },
+                        {"DungeonKey", 0 },
+                    };
+                    playerItemsService.UpdateFields(resetsPlayerItems);
                     return true;
                 case "C":
                 case "c":

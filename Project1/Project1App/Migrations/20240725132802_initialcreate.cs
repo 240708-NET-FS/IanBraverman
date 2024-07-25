@@ -50,7 +50,8 @@ namespace Project1.Migrations
                 name: "PlayerItems",
                 columns: table => new
                 {
-                    PlayerItemsId = table.Column<int>(type: "int", nullable: false),
+                    PlayerItemsId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Sword = table.Column<int>(type: "int", nullable: false),
                     Shield = table.Column<int>(type: "int", nullable: false),
                     Armor = table.Column<int>(type: "int", nullable: false),
@@ -62,12 +63,18 @@ namespace Project1.Migrations
                 {
                     table.PrimaryKey("PK_PlayerItems", x => x.PlayerItemsId);
                     table.ForeignKey(
-                        name: "FK_PlayerItems_Players_PlayerItemsId",
-                        column: x => x.PlayerItemsId,
+                        name: "FK_PlayerItems_Players_PlayerId",
+                        column: x => x.PlayerId,
                         principalTable: "Players",
                         principalColumn: "PlayerId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerItems_PlayerId",
+                table: "PlayerItems",
+                column: "PlayerId",
+                unique: true);
         }
 
         /// <inheritdoc />

@@ -13,9 +13,9 @@ public class LoginController
 
     private PlayerService playerService;
 
-    public LoginController(LoginService service, PlayerService playerservice)
+    public LoginController(LoginService loginservice, PlayerService playerservice)
     {
-        loginService = service;
+        loginService = loginservice;
         playerService = playerservice;
     }
 
@@ -23,65 +23,87 @@ public class LoginController
 
     public void Login()
     {
-        Console.WriteLine("Please log in below");
-        Console.WriteLine("Please enter your username below: ");
 
-        string username = Console.ReadLine();
 
-        Console.WriteLine("Please enter your password: ");
+        bool loggedIn = false;
 
-        string password = Console.ReadLine();
-
-        try
+        while (loggedIn == false)
         {
-            Login login = loginService.Login(username, password);
-            State.currentPlayer = playerService.GetByLoginID();
-            Console.WriteLine("the current login is " + State.currentLogin.LoginId);
+            Console.WriteLine("Please log in below");
+            Console.WriteLine("Please enter your username below: ");
 
-            Console.WriteLine("The current player is: " + State.currentPlayer);
+            string username = Console.ReadLine();
 
-            Console.WriteLine("Do you want to quit? Please type Y or N");
+            Console.WriteLine("Please enter your password: ");
 
-            string input = Console.ReadLine();
-
-            switch (input)
+            string password = Console.ReadLine();
+            try
             {
-                case "y":
-                case "Y":
-                    State.isActive = false;
-                    break;
-                case "N":
-                case "n":
-                    break;
-                default:
-                    Console.WriteLine("Invalid Input");
-                    break;
-            }
+                {
+                    Login login = loginService.Login(username, password);
+                    if (login != null)
+                    {
+                        State.currentPlayer = playerService.GetByLoginID();
+                        Console.WriteLine("the current login is " + State.currentLogin.LoginId);
 
-        }
-        catch (LoginException e)
-        {
-            Console.WriteLine(e.Message);
+                        Console.WriteLine("The current player is: " + State.currentPlayer);
+
+                        // Console.WriteLine("Do you want to quit? Please type Y or N");
+
+                        // string input = Console.ReadLine();
+
+                        // switch (input)
+                        // {
+                        //     case "y":
+                        //     case "Y":
+                        //         State.isActive = false;
+                        //         break;
+                        //     case "N":
+                        //     case "n":
+                        //         break;
+                        //     default:
+                        //         Console.WriteLine("Invalid Input");
+                        //         break;
+                        // }
+                        loggedIn = true;
+                    }
+                    // else
+                    // {
+                    //     Console.WriteLine("Please try logging in again");
+                    //     continue;
+                    // }
+                }
+            }
+            catch (LoginException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
     public void Register()
+
     {
-        Console.WriteLine("Please Register Below");
-        Console.WriteLine("Please enter your new username below: ");
-
-        string username = Console.ReadLine();
-
-        Console.WriteLine("Please enter your new password below: ");
-
-        string password = Console.ReadLine();
-
-        try
+        bool registered = false;
+        while (!registered)
         {
-            loginService.Register(username, password);
+            Console.WriteLine("Please Register Below");
+            Console.WriteLine("Please enter your new username below: ");
+
+            string username = Console.ReadLine();
+
+            Console.WriteLine("Please enter your new password below: ");
+
+            string password = Console.ReadLine();
+
+            try
+            {
+                loginService.Register(username, password);
+            }
+            catch (LoginException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
-        catch (LoginException e)
-        {
-            Console.WriteLine(e.Message);
-        }
+
     }
 }

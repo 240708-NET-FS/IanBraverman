@@ -72,7 +72,10 @@ namespace Project1.Migrations
             modelBuilder.Entity("Project1App.Entities.PlayerItems", b =>
                 {
                     b.Property<int>("PlayerItemsId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlayerItemsId"));
 
                     b.Property<int>("Armor")
                         .HasColumnType("int");
@@ -94,6 +97,9 @@ namespace Project1.Migrations
 
                     b.HasKey("PlayerItemsId");
 
+                    b.HasIndex("PlayerId")
+                        .IsUnique();
+
                     b.ToTable("PlayerItems");
                 });
 
@@ -112,7 +118,7 @@ namespace Project1.Migrations
                 {
                     b.HasOne("Project1App.Entities.Player", "Player")
                         .WithOne("PlayerItems")
-                        .HasForeignKey("Project1App.Entities.PlayerItems", "PlayerItemsId")
+                        .HasForeignKey("Project1App.Entities.PlayerItems", "PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -98,6 +98,7 @@ public class LoginController
             try
             {
                 loginService.Register(username, password);
+                registered = true;
             }
             catch (LoginException e)
             {

@@ -175,6 +175,16 @@ public class Program
                             Console.WriteLine("Room Three Start...");
                             playGameController.PlayRoomThree();
                         }
+                        else if (State.currentPlayer.CurrentRoom == 4)
+                        {
+                            Console.WriteLine("Room Four Start...");
+                            playGameController.PlayRoomFour();
+                        }
+                        else if (State.currentPlayer.CurrentRoom == 5)
+                        {
+                            Console.WriteLine("Room Five Start...");
+                            playGameController.PlayRoomFive();
+                        }
                         else
                         {
                             Console.WriteLine("You finished the game! Congrats!");

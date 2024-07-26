@@ -36,12 +36,15 @@ public class Program
                     bool loginOrRegister = LoginOrRegisterController.LoginOrRegister();
                     if (loginOrRegister == true)
                     {
+                        //login, then set the current player in state, then set the player items in state based off player
                         loginController.Login();
-
+                        State.currentPlayer = playerService.GetByLoginID();
+                        State.playerItems = playerItemsService.GetByID(State.currentPlayer.PlayerId);
                         context.SaveChanges();
                     }
                     else if (loginOrRegister == false)
                     {
+                        //register login, then register player to that login, then register items to that player
                         loginController.Register();
                         playerController.NewPlayer();
                         playerItemsService.RegisterNewPlayerItems(State.currentPlayer.PlayerId, State.currentPlayer);
@@ -57,29 +60,31 @@ public class Program
                     {
                         Console.WriteLine("current room for player " + State.currentPlayer.CurrentRoom);
                         //do you want to play or no
-                        Console.WriteLine("Do you want to quit? Please type Yes or No");
-
-                        string inputContinueOrQuit = Console.ReadLine();
-
-                        switch (inputContinueOrQuit)
+                        if (State.currentPlayer.CurrentRoom != 0)
                         {
-                            case "y":
-                            case "Y":
-                            case "Yes":
-                            case "yes":
-                                State.isActive = false;
-                                playingGame = false;
-                                break;
-                            case "N":
-                            case "n":
-                            case "No":
-                            case "no":
-                                break;
-                            default:
-                                Console.WriteLine("Invalid Input");
-                                break;
-                        }
+                            Console.WriteLine("Do you want to quit? Please type Yes or No");
 
+                            string inputContinueOrQuit = Console.ReadLine();
+
+                            switch (inputContinueOrQuit)
+                            {
+                                case "y":
+                                case "Y":
+                                case "Yes":
+                                case "yes":
+                                    State.isActive = false;
+                                    playingGame = false;
+                                    break;
+                                case "N":
+                                case "n":
+                                case "No":
+                                case "no":
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid Input");
+                                    break;
+                            }
+                        }
                         if (State.currentPlayer.CurrentRoom == 0)
                         {
                             var updatesRoom = new Dictionary<string, object>
@@ -99,6 +104,11 @@ public class Program
                             Console.WriteLine("Room Two Start...");
                             playGameController.PlayRoomTwo();
                         }
+                        else if (State.currentPlayer.CurrentRoom == 3)
+                        {
+                            Console.WriteLine("Room Three Start...");
+                            playGameController.PlayRoomThree();
+                        }
                         else
                         {
                             Console.WriteLine("You finished the game! Congrats!");
@@ -113,32 +123,33 @@ public class Program
                     Console.WriteLine("Continuing prior game...");
                     while (playingGame)
                     {
-                        //if you are in room 0, puts you to one to start game
-
-                        //do you want to play or no
-                        Console.WriteLine("Do you want to quit? Please type Y or N");
-
-                        string inputContinueOrQuit = Console.ReadLine();
-
-                        switch (inputContinueOrQuit)
+                        if (State.currentPlayer.CurrentRoom != 0)
                         {
-                            case "y":
-                            case "Y":
-                            case "Yes":
-                            case "yes":
-                                State.isActive = false;
-                                playingGame = false;
-                                break;
-                            case "N":
-                            case "n":
-                            case "No":
-                            case "no":
-                                break;
-                            default:
-                                Console.WriteLine("Invalid Input");
-                                break;
-                        }
+                            //do you want to play or no
+                            Console.WriteLine("Do you want to quit? Please type Y or N");
 
+                            string inputContinueOrQuit = Console.ReadLine();
+
+                            switch (inputContinueOrQuit)
+                            {
+                                case "y":
+                                case "Y":
+                                case "Yes":
+                                case "yes":
+                                    State.isActive = false;
+                                    playingGame = false;
+                                    break;
+                                case "N":
+                                case "n":
+                                case "No":
+                                case "no":
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid Input");
+                                    break;
+                            }
+                        }
+                        //if you are in room 0, puts you to one to start game
                         if (State.currentPlayer.CurrentRoom == 0)
                         {
                             var updatesRoom = new Dictionary<string, object>
@@ -158,6 +169,11 @@ public class Program
                         {
                             Console.WriteLine("Room Two Start...");
                             playGameController.PlayRoomTwo();
+                        }
+                        else if (State.currentPlayer.CurrentRoom == 3)
+                        {
+                            Console.WriteLine("Room Three Start...");
+                            playGameController.PlayRoomThree();
                         }
                         else
                         {

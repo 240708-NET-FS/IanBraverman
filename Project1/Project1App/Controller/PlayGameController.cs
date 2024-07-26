@@ -26,9 +26,9 @@ public class PlayGameController
     {
         bool stillInRoom = true;
         Console.WriteLine("Why does my head hurt so bad? You slowly open your eyes and you are definitly not in kansas anymore.");
-        Console.WriteLine("You look around and see that you are locked in a cold medieval dungeon cell.");
+        Console.WriteLine("You look around and see that you are locked in a cold, medieval dungeon cell.");
         Console.WriteLine("There is only one window, the walls are made of stone, and there is a big iron gate leading to the hallway; the only way out.");
-        Console.WriteLine("You are in beat up tattered clothing. You check your pockets, and all of your items are gone.");
+        Console.WriteLine("You are in beat up tattered clothing. You check your pockets, and all of your belongings are gone.");
         Console.WriteLine("Where am I?");
         while (stillInRoom == true)
         {
@@ -133,7 +133,7 @@ public class PlayGameController
     {
         bool stillInRoom = true;
         Console.WriteLine("As you step out of your dungeon cell, you find yourself in a cold, damp, and dark hallway. You start to look around and see locked room after room, all filled with prisoners.");
-        Console.WriteLine("Your cell is at the end of the hallway. The hallway seems to stretch on forever");
+        Console.WriteLine("Your cell is at the end of the hallway. The hallway seems to stretch on forever.");
         Console.WriteLine("There are two cells with open doors.");
         Console.WriteLine("How did I get here?");
 
@@ -160,7 +160,7 @@ public class PlayGameController
                 case "one":
                     if (prisonerCellNumber == 1)
                     {
-                        Console.WriteLine("You walk up to one of the other prisoners cells, and he looks at you with hopeful, sunken eyes");
+                        Console.WriteLine("You walk up to one of the other prisoners cells, and he looks at you with hopeful, sunken eyes.");
                         Console.WriteLine("He is also in tattered clothing, and looks like he hasnt eaten in weeks.");
                         Console.WriteLine("You take out your dungeon key, and unlock his cell.");
                         Console.WriteLine("The prisoner immediately runs out of his cell, pushes you aside, and runs down the hallway.");
@@ -301,7 +301,7 @@ public class PlayGameController
                 case "3":
                 case "Three":
                 case "three":
-                    Console.WriteLine("You walk up to the second unlocked. Maybe this cell will have something useful for you.");
+                    Console.WriteLine("You walk up to the second unlockedcell . Maybe this cell will have something useful for you.");
                     Console.WriteLine("You look around, checking the bed, under the furniture.");
                     Console.WriteLine("In the corner of the room you find a beat up, rusty sword!");
                     Console.WriteLine("'This will come in handy!'");
@@ -356,6 +356,144 @@ public class PlayGameController
             //make it that current room is now 2
         }
 
+
+    }
+
+    public void PlayRoomThree()
+    {
+        bool stillInRoom = true;
+        bool inBattle = true;
+        Console.WriteLine("You walk through the large wooden door, and on the other side enter into a large circular room");
+        Console.WriteLine("The walls and floor are solid stone, and on the other side of the room is another large wooden door.");
+        Console.WriteLine("'Maybe that's the exit?'");
+        Console.WriteLine("However, the path to this door is not clear. Guarding the exit stands a dungeon guard.");
+        Console.WriteLine("An enormous beast of a man, at least 6 feet tall, weilding a long sword.");
+        Console.WriteLine("'Hey! You! What are you doing out of your cell?!'");
+        Console.WriteLine("He storms toward you, anger in his face. Time to fight.");
+        Console.WriteLine("");
+        Console.WriteLine("In a fight, you will take turns with your opponent swinging blows.");
+        Console.WriteLine("The more armor and protection you have, the better chance you have to win the fight.");
+        //when a player attacks the other, they roll a d20. if the roll is above 15, they hit the opponent.
+        int dieRollAdditionalAttack = 0;
+        //die roll additional attack adds to the die roll, making it more likely to hit opponent.
+        int dieRollAdditionalProtection = 0;
+        //die roll additional defense subtracts from the die roll, making it less likely to be hit. 
+        // having sword adds 3 to die roll additional attack
+        if (State.playerItems.Sword == 1)
+        {
+            dieRollAdditionalAttack = dieRollAdditionalAttack + 3;
+        }
+        //having shield adds 3 to die roll additional defense.
+        if (State.playerItems.Shield == 3)
+        {
+            dieRollAdditionalProtection = dieRollAdditionalProtection + 3;
+        }
+
+
+
+        while (stillInRoom == true)
+        {
+            Console.WriteLine("The fight begins!");
+            int enemyGuardHealth = 3;
+            while (inBattle == true)
+            {
+                //first enemy attacks you
+                int enemyAttackRoll = playerService.Rolld20Attack(0);
+                int enemyAttackRollMinusDefense = enemyAttackRoll - dieRollAdditionalProtection;
+                //if the enemy minus defense buff rolls above 12, they hit player, and player loses 1 life
+                if (enemyAttackRollMinusDefense > 12)
+                {
+                    Console.WriteLine("The guard swings his big sword at you, and it connects! You lose one health");
+                    Console.WriteLine($"Your health goes from from {State.currentPlayer.Health} to {State.currentPlayer.Health - 1}");
+                    Console.WriteLine("");
+                    var updatesLife = new Dictionary<string, object>
+                    {
+                        {"Health", State.currentPlayer.Health - 1}
+                    };
+                    //this also gets the loggedinplayer again and sets loggedinplayer after being updated
+                    playerService.UpdateFields(updatesLife);
+                    if (State.currentPlayer.Health == 0)
+                    {
+                        Console.WriteLine("Oh no! You are out of health. You are dead. If only you had some equipment to better your odds...");
+                        var updatesPlayer = new Dictionary<string, object>
+                        {
+                            {"CurrentRoom", 0},
+                            {"Health", 5},
+                        };
+                        playerService.UpdateFields(updatesPlayer);
+                        var resetsPlayerItems = new Dictionary<string, object>
+                        {
+                            {"Sword", 0 },
+                            {"Shield", 0 },
+                            {"Armor", 0 },
+                            {"Helmet", 0 },
+                            {"DungeonKey", 0 },
+                        };
+                        playerItemsService.UpdateFields(resetsPlayerItems);
+                        stillInRoom = false;
+                        inBattle = false;
+                        break;
+                    };
+                }
+                else
+                {
+                    Console.WriteLine("The guard swings his big sword at you, but he misses!");
+                    Console.WriteLine("");
+                }
+                // if player already dead, end battle.
+                if (!inBattle) break;
+
+                int playerAttackRoll = playerService.Rolld20Attack(dieRollAdditionalAttack);
+                if (playerAttackRoll > 12)
+                {
+                    if (State.playerItems.Sword == 1)
+                    {
+                        Console.WriteLine("You swing your sword back at him, and it connects!");
+                        Console.WriteLine("");
+                    }
+                    else
+                    {
+                        Console.WriteLine("You throw a punch at him, and it connects!");
+                        Console.WriteLine("");
+                    }
+                    Console.WriteLine($"The guard's health goes down from {enemyGuardHealth} to {enemyGuardHealth - 1}.");
+                    Console.WriteLine("");
+                    enemyGuardHealth = enemyGuardHealth - 1;
+                    if (enemyGuardHealth == 0)
+                    {
+                        Console.WriteLine("The guard falls down, defeated. He has been slain!");
+                        inBattle = false;
+                        break;
+                    }
+                }
+                else
+                {
+
+                    if (State.playerItems.Sword == 1)
+                    {
+                        Console.WriteLine("You swing your sword back at him, and but it misses!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("You throw a punch at him, but it misses!");
+                    }
+                }
+
+            }
+            //basically if you died
+            if (!stillInRoom) break;
+
+            Console.WriteLine("Now, with the guard slain, nobody can stop you from escaping!");
+            Console.WriteLine("You walk over to the wooden door on the other side of the room, open it, and step out.");
+            var updatesRoom = new Dictionary<string, object>
+                {
+                    {"CurrentRoom", 4},
+                };
+            playerService.UpdateFields(updatesRoom);
+            stillInRoom = false;
+            break;
+
+        }
 
     }
 }

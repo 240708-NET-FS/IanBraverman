@@ -69,7 +69,14 @@ public class PlayerService : IService<Player>
         State.currentPlayer = player;
 
     }
+    //this takes the attack boost, and returns a number 1 through 20 for the attack, then adds attack boost to it;
+    public int Rolld20Attack(int attackBoost)
+    {
+        Random random = new Random();
+        int randomNumber = random.Next(1, 21);
+        randomNumber = randomNumber + attackBoost;
+        return randomNumber;
 
-
+    }
 
 }

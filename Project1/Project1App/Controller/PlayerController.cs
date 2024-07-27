@@ -19,10 +19,13 @@ public class PlayerController
 
     public bool NewGameOrContinue()
     {
-        Console.WriteLine("Would you like to continue your current game or start a new one?");
+        Console.WriteLine($"Hello {State.currentPlayer.FirstName}, would you like to continue your current game or start a new one?");
         Console.WriteLine("Please enter N for new game, or C to continue your prior game: ");
 
         string input = Console.ReadLine();
+
+        //this clears everything previously on the console making the game more readable
+        Console.Clear();
 
         while (true)
         {

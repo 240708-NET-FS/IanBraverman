@@ -46,9 +46,9 @@ public class LoginService : IService<Login>
         Login login = new Login { UserName = username, Password = password };
 
 
-        // //this checks to see if username already exists in the system
+        //this checks to see if username already exists in the system
         Login loginById = _loginDAO.GetLoginByUsernameAndPassword(username, password);
-
+        Console.WriteLine(loginById);
         //need to have the ? because if loginbyID comes back null, then gives an error because cant do
         //.username on a null
         if (loginById?.UserName == username)

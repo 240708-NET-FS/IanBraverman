@@ -58,13 +58,15 @@ public class Program
                     Console.WriteLine("Starting a new game...");
                     while (playingGame)
                     {
-                        Console.WriteLine("current room for player " + State.currentPlayer.CurrentRoom);
+                        Console.WriteLine("Current room for player: " + State.currentPlayer.CurrentRoom);
                         //do you want to play or no
                         if (State.currentPlayer.CurrentRoom != 0)
                         {
                             Console.WriteLine("Do you want to quit? Please type Yes or No");
 
                             string inputContinueOrQuit = Console.ReadLine();
+
+                            Console.Clear();
 
                             switch (inputContinueOrQuit)
                             {
@@ -85,8 +87,14 @@ public class Program
                                     break;
                             }
                         }
+
+                        if (playingGame == false)
+                        {
+                            break;
+                        }
                         if (State.currentPlayer.CurrentRoom == 0)
                         {
+                            Console.Clear();
                             var updatesRoom = new Dictionary<string, object>
                                 {
                                     {"CurrentRoom", 1},
@@ -96,21 +104,37 @@ public class Program
                         }
                         else if (State.currentPlayer.CurrentRoom == 1)
                         {
+                            Console.Clear();
                             Console.WriteLine("Room One Start...");
                             playGameController.PlayRoomOne();
                         }
                         else if (State.currentPlayer.CurrentRoom == 2)
                         {
+                            Console.Clear();
                             Console.WriteLine("Room Two Start...");
                             playGameController.PlayRoomTwo();
                         }
                         else if (State.currentPlayer.CurrentRoom == 3)
                         {
+                            Console.Clear();
                             Console.WriteLine("Room Three Start...");
                             playGameController.PlayRoomThree();
                         }
+                        else if (State.currentPlayer.CurrentRoom == 4)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Room Four Start...");
+                            playGameController.PlayRoomFour();
+                        }
+                        else if (State.currentPlayer.CurrentRoom == 5)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Room Five Start...");
+                            playGameController.PlayRoomFive();
+                        }
                         else
                         {
+                            Console.Clear();
                             Console.WriteLine("You finished the game! Congrats!");
                             playingGame = false;
                         }
@@ -123,12 +147,16 @@ public class Program
                     Console.WriteLine("Continuing prior game...");
                     while (playingGame)
                     {
+                        Console.WriteLine("Current room for player: " + State.currentPlayer.CurrentRoom);
                         if (State.currentPlayer.CurrentRoom != 0)
                         {
                             //do you want to play or no
-                            Console.WriteLine("Do you want to quit? Please type Y or N");
+                            Console.WriteLine("Do you want to quit? Please type Y or N: ");
 
                             string inputContinueOrQuit = Console.ReadLine();
+
+                            //this clears everything previously on the console making the game more readable
+                            Console.Clear();
 
                             switch (inputContinueOrQuit)
                             {
@@ -149,6 +177,12 @@ public class Program
                                     break;
                             }
                         }
+
+                        if (playingGame == false)
+                        {
+                            break;
+                        }
+
                         //if you are in room 0, puts you to one to start game
                         if (State.currentPlayer.CurrentRoom == 0)
                         {
@@ -162,31 +196,37 @@ public class Program
                         //if you are in room 1, starts room 1 game
                         else if (State.currentPlayer.CurrentRoom == 1)
                         {
+                            Console.Clear();
                             Console.WriteLine("Room One Start...");
                             playGameController.PlayRoomOne();
                         }
                         else if (State.currentPlayer.CurrentRoom == 2)
                         {
+                            Console.Clear();
                             Console.WriteLine("Room Two Start...");
                             playGameController.PlayRoomTwo();
                         }
                         else if (State.currentPlayer.CurrentRoom == 3)
                         {
+                            Console.Clear();
                             Console.WriteLine("Room Three Start...");
                             playGameController.PlayRoomThree();
                         }
                         else if (State.currentPlayer.CurrentRoom == 4)
                         {
+                            Console.Clear();
                             Console.WriteLine("Room Four Start...");
                             playGameController.PlayRoomFour();
                         }
                         else if (State.currentPlayer.CurrentRoom == 5)
                         {
+                            Console.Clear();
                             Console.WriteLine("Room Five Start...");
                             playGameController.PlayRoomFive();
                         }
                         else
                         {
+                            Console.Clear();
                             Console.WriteLine("You finished the game! Congrats!");
                             playingGame = false;
                         }

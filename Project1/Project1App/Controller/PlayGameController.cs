@@ -38,7 +38,8 @@ public class PlayGameController
             Console.WriteLine("3: Try and escape through the gate");
 
             string playerInput = Console.ReadLine();
-
+            //this clears everything previously on the console making the game more readable
+            Console.Clear();
 
 
             switch (playerInput)
@@ -46,17 +47,25 @@ public class PlayGameController
                 case "1":
                 case "One":
                 case "one":
-                    Console.WriteLine("You look around the room and find a mysterious key...");
-                    Console.WriteLine("I wonder what it opens?");
-                    Console.WriteLine("You add the key to your inventory?");
-                    //make dungeon key 1 in their playeritems
-                    var updatesKey = new Dictionary<string, object>
+                    if (State.playerItems.DungeonKey == 0)
+                    {
+                        Console.WriteLine("You look around the room and find a mysterious key...");
+                        Console.WriteLine("I wonder what it opens?");
+                        Console.WriteLine("You add the key to your inventory.");
+                        //make dungeon key 1 in their playeritems
+                        var updatesKey = new Dictionary<string, object>
                     {
                         {"DungeonKey", 1},
                     };
-                    playerItemsService.UpdateFields(updatesKey);
-                    //this also gets current players playeritems and sets playeritems after being updated again
-                    break;
+                        playerItemsService.UpdateFields(updatesKey);
+                        //this also gets current players playeritems and sets playeritems after being updated again
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You look around the room again and do not find anything else of use.");
+                        break;
+                    }
                 case "2":
                 case "Two":
                 case "two":
@@ -145,11 +154,14 @@ public class PlayGameController
         {
             Console.WriteLine("Please pick one of the following options: ");
             Console.WriteLine("1: Use your dungeon key to unlock one of your fellow prisoners cells. Maybe they can help you escape?");
-            Console.WriteLine("2: Check what is inside the first opened cell");
-            Console.WriteLine("3: Check what is inside the second opened cell");
+            Console.WriteLine("2: Check what is inside the first opened cell.");
+            Console.WriteLine("3: Check what is inside the second opened cell.");
             Console.WriteLine("4: Walk down the hallway and see what awaits you...");
 
             string playerInput = Console.ReadLine();
+
+            //this clears everything previously on the console making the game more readable
+            Console.Clear();
 
 
 
@@ -161,7 +173,7 @@ public class PlayGameController
                     if (prisonerCellNumber == 1)
                     {
                         Console.WriteLine("You walk up to one of the other prisoners cells, and he looks at you with hopeful, sunken eyes.");
-                        Console.WriteLine("He is also in tattered clothing, and looks like he hasnt eaten in weeks.");
+                        Console.WriteLine("He is also in tattered clothing, and looks like he hasn'4t eaten in weeks.");
                         Console.WriteLine("You take out your dungeon key, and unlock his cell.");
                         Console.WriteLine("The prisoner immediately runs out of his cell, pushes you aside, and runs down the hallway.");
                         Console.WriteLine("You are knocked against the wall hitting your head badly; you lose one health.");
@@ -301,13 +313,13 @@ public class PlayGameController
                 case "3":
                 case "Three":
                 case "three":
-                    Console.WriteLine("You walk up to the second unlockedcell . Maybe this cell will have something useful for you.");
+                    Console.WriteLine("You walk up to the second unlocked cell . Maybe this cell will have something useful for you.");
                     Console.WriteLine("You look around, checking the bed, under the furniture.");
                     Console.WriteLine("In the corner of the room you find a beat up, rusty sword!");
-                    Console.WriteLine("'This will come in handy!'");
+                    Console.WriteLine("'This will come in handy!'.");
                     Console.WriteLine("You add the sword to your inventory.");
                     Console.WriteLine("Now when you are in a fight, you will have additional attack and hopefully deal more damage to opponents.");
-                    Console.WriteLine("You now have sword in your inventory");
+                    Console.WriteLine("You now have sword in your inventory.");
 
                     var updatesSword = new Dictionary<string, object>
                     {
@@ -368,7 +380,7 @@ public class PlayGameController
         Console.WriteLine("'Maybe that's the exit?'");
         Console.WriteLine("However, the path to this door is not clear. Guarding the exit stands a dungeon guard.");
         Console.WriteLine("An enormous beast of a man, at least 7 feet tall, weilding a long sword.");
-        Console.WriteLine("'Hey! You! What are you doing out of your cell?!'");
+        Console.WriteLine($"'Hey {State.currentPlayer.FirstName}! What are you doing out of your cell?!'");
         Console.WriteLine("He storms toward you, anger in his face. Time to fight.");
         Console.WriteLine("");
         Console.WriteLine("In a fight, you will take turns with your opponent swinging blows.");
@@ -386,7 +398,7 @@ public class PlayGameController
         //having shield adds 3 to die roll additional defense.
         if (State.playerItems.Shield == 1)
         {
-            dieRollAdditionalProtection = dieRollAdditionalProtection + 3;
+            dieRollAdditionalProtection = dieRollAdditionalProtection + 2;
         }
 
 
@@ -525,6 +537,9 @@ public class PlayGameController
             Console.WriteLine("4: Cross the bridge to the portal.");
 
             string playerInput = Console.ReadLine();
+
+            //this clears everything previously on the console making the game more readable
+            Console.Clear();
             bool isThereAGuard = true;
 
             switch (playerInput)
@@ -533,6 +548,15 @@ public class PlayGameController
                 case "One":
                 case "one":
                     //search statue, then statue number goes up. if it is the third statue, you get the helmet
+                    if (statueNumber == 1)
+                    {
+                        Console.WriteLine("You go up to one of the people statues, and search the statue.");
+                        Console.WriteLine("It is then that you realize that this is not really a statue, but charred human remains");
+                        Console.WriteLine("'How did this person burn to death?'");
+                        Console.WriteLine("Unfortunately this statue does not have anything useful. Maybe one of the others will?");
+                        statueNumber++;
+                        break;
+                    }
                     if (statueNumber == 2)
                     {
                         Console.WriteLine("You go up to one of the people statues, and search the statue.");
@@ -555,21 +579,18 @@ public class PlayGameController
                         Console.WriteLine("You take a close look at the statue, and you notice the statue has a brown leather sack over its shoulder.");
                         Console.WriteLine("You take the sack off its shoulder, and inside find a small potion with the label 'Health Potion'.");
                         Console.WriteLine("'This is great!'");
-                        Console.WriteLine($"You drink the potion, and your health is restored from {State.currentPlayer.Health} back to 5");
+                        Console.WriteLine($"You drink the potion, and your health is restored from {State.currentPlayer.Health} back to 5.");
                         var updatesPlayerHealth = new Dictionary<string, object>
                         {
                             {"Health", 5},
                         };
+                        statueNumber++;
                         playerService.UpdateFields(updatesPlayerHealth);
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("You go up to one of the people statues, and search the statue.");
-                        Console.WriteLine("It is then that you realize that this is not really statue, but charred human remains");
-                        Console.WriteLine("'How did this person burn to death?'");
-                        Console.WriteLine("Unfortunately this statue does not have anything useful. Maybe one of the others will?");
-                        statueNumber++;
+                        Console.WriteLine("There are no more statues to search.");
                         break;
                     }
                 case "2":
@@ -582,7 +603,7 @@ public class PlayGameController
                         Console.WriteLine("You go on a search to find anyone outside of the castle who may be able to help you.");
                         Console.WriteLine("On the edge of the left side of the castle you find a small shed like building. It is made of wood, and looks rustic.");
                         Console.WriteLine("You enter the shed, and inside there is a prison guard!");
-                        Console.WriteLine("'Hey! You! What are you doing in here'");
+                        Console.WriteLine("'Hey! You! What are you doing in here?'");
                         Console.WriteLine("He pulls out his sword, and comes up to you to fight.");
 
                         int dieRollAdditionalAttack = 0;
@@ -597,7 +618,7 @@ public class PlayGameController
                         //having shield adds 3 to die roll additional defense.
                         if (State.playerItems.Shield == 1)
                         {
-                            dieRollAdditionalProtection = dieRollAdditionalProtection + 3;
+                            dieRollAdditionalProtection = dieRollAdditionalProtection + 2;
                         }
                         //check to see if have helmet.
                         if (State.playerItems.Helmet == 1)
@@ -633,7 +654,7 @@ public class PlayGameController
                                 if (State.currentPlayer.Health == 0)
                                 {
                                     Console.WriteLine("Oh no! You are out of health. You are dead.");
-                                    if (State.playerItems.Sword == 0 || State.playerItems.Shield == 0)
+                                    if (State.playerItems.Sword == 0 || State.playerItems.Shield == 0 || State.playerItems.Helmet == 0)
                                     {
                                         Console.WriteLine(" If only you had had some better equipment to better your odds...");
                                     }
@@ -732,7 +753,7 @@ public class PlayGameController
                 case "4":
                 case "Four":
                 case "four":
-                    Console.WriteLine("You walk accross the castle courtyard to the drawbridge. As you start to cross, you notice something quite settling waiting for you on the other side.");
+                    Console.WriteLine("You walk accross the castle courtyard to the drawbridge. As you start to cross, you notice something quite unsettling waiting for you on the other side.");
                     Console.WriteLine("Sitting on the other side of the drawbridge is a ginormous red dragon. It is guarding the portal entrance.");
                     Console.WriteLine("Do you choose to cross the drawbridge, or go back to the courtyard? Please type Yes to cross the drawbridge, or No to return to the courtyard.: ");
                     string drawbridgeInput = Console.ReadLine();
@@ -803,7 +824,7 @@ public class PlayGameController
         }
         if (State.playerItems.Shield == 1)
         {
-            dieRollAdditionalProtection = dieRollAdditionalProtection + 3;
+            dieRollAdditionalProtection = dieRollAdditionalProtection + 2;
         }
 
 
@@ -818,7 +839,7 @@ public class PlayGameController
                 //first enemy attacks you
                 int enemyAttackRoll = playerService.Rolld20Attack(0);
                 int enemyAttackRollMinusDefense = enemyAttackRoll - dieRollAdditionalProtection;
-                //if the enemy minus defense buff rolls above 12, they hit player, and player loses 1 life
+                //if the enemy minus defense buff rolls above 10, they hit player, and player loses 1 life
                 if (enemyAttackRollMinusDefense > 10)
                 {
                     Console.WriteLine("The dragon swings its tail at you, and it connects! You lose one health");
@@ -833,7 +854,7 @@ public class PlayGameController
                     if (State.currentPlayer.Health == 0)
                     {
                         Console.WriteLine("Oh no! You are out of health. You are dead.");
-                        if (State.playerItems.Sword == 0 || State.playerItems.Shield == 0)
+                        if (State.playerItems.Sword == 0 || State.playerItems.Shield == 0 || State.playerItems.Armor == 0 || State.playerItems.Helmet == 0)
                         {
                             Console.WriteLine(" If only you had had some equipment to better your odds...");
                         }

@@ -58,7 +58,7 @@ public class Program
                     Console.WriteLine("Starting a new game...");
                     while (playingGame)
                     {
-                        Console.WriteLine("Current room for player: " + State.currentPlayer.CurrentRoom);
+                        Console.WriteLine($"Hello {State.currentPlayer.FirstName}, you are on level {State.currentPlayer.CurrentRoom} ");
                         //do you want to play or no
                         if (State.currentPlayer.CurrentRoom != 0)
                         {
@@ -66,7 +66,7 @@ public class Program
 
                             string inputContinueOrQuit = Console.ReadLine();
 
-                            Console.Clear();
+
 
                             switch (inputContinueOrQuit)
                             {
@@ -94,7 +94,7 @@ public class Program
                         }
                         if (State.currentPlayer.CurrentRoom == 0)
                         {
-                            Console.Clear();
+
                             var updatesRoom = new Dictionary<string, object>
                                 {
                                     {"CurrentRoom", 1},
@@ -147,6 +147,7 @@ public class Program
                     Console.WriteLine("Continuing prior game...");
                     while (playingGame)
                     {
+                        Console.WriteLine(" ");
                         Console.WriteLine("Current room for player: " + State.currentPlayer.CurrentRoom);
                         if (State.currentPlayer.CurrentRoom != 0)
                         {
@@ -155,8 +156,8 @@ public class Program
 
                             string inputContinueOrQuit = Console.ReadLine();
 
-                            //this clears everything previously on the console making the game more readable
-                            Console.Clear();
+
+
 
                             switch (inputContinueOrQuit)
                             {

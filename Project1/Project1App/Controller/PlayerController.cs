@@ -1,4 +1,5 @@
 using Project1App.DAO;
+using Project1App.Entities;
 using Project1App.Service;
 using Project1App.Utility;
 using Project1App.Utility.Exceptions;
@@ -20,6 +21,10 @@ public class PlayerController
     public bool NewGameOrContinue()
     {
         Console.WriteLine($"Hello {State.currentPlayer.FirstName}, would you like to continue your current game or start a new one?");
+        if (State.currentPlayer.CurrentRoom > 0)
+        {
+            Console.WriteLine($"You are currently on level {State.currentPlayer.CurrentRoom}");
+        }
         Console.WriteLine("Please enter N for new game, or C to continue your prior game: ");
 
         string input = Console.ReadLine();

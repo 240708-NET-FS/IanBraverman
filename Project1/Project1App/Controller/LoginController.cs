@@ -44,9 +44,7 @@ public class LoginController
                     if (login != null)
                     {
                         State.currentPlayer = playerService.GetByLoginID();
-                        Console.WriteLine("the current login is " + State.currentLogin.LoginId);
 
-                        Console.WriteLine("The current player is: " + State.currentPlayer);
 
                         // Console.WriteLine("Do you want to quit? Please type Y or N");
 
